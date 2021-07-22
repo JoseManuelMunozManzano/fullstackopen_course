@@ -1,0 +1,12 @@
+title Exercise 0.6
+
+note over browser:
+user writes text 'New Note' 
+and click Save button
+end note
+
+note over browser:
+browser redraw notes
+end note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
