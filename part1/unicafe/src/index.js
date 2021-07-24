@@ -17,7 +17,15 @@ const Statistic = ({ text, value, sign = '' }) => {
   );
 };
 
-const Statistics = ({ good, neutral, bad, all, average, positive }) => {
+const Statistics = ({ good, neutral, bad }) => {
+  const all = good + neutral + bad;
+  let average = 0;
+  let positive = 0;
+  if (all) {
+    average = (good - bad) / (good + neutral + bad);
+    positive = (good * 100) / (good + neutral + bad);
+  }
+
   return (
     <div>
       <Statistic text="good" value={good} />
@@ -35,10 +43,6 @@ const App = () => {
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
-  const all = useRef(0);
-  const average = useRef(0);
-  const positive = useRef(0);
-
   const handleGood = () => {
     setGood(good + 1);
   };
@@ -51,12 +55,6 @@ const App = () => {
     setBad(bad + 1);
   };
 
-  all.current = good + neutral + bad;
-  if (all.current) {
-    average.current = (good - bad) / (good + neutral + bad);
-    positive.current = (good * 100) / (good + neutral + bad);
-  }
-
   return (
     <div>
       <Header />
@@ -67,15 +65,8 @@ const App = () => {
 
       <StatisticsHeader />
 
-      {all.current ? (
-        <Statistics
-          good={good}
-          neutral={neutral}
-          bad={bad}
-          all={all.current}
-          average={average.current}
-          positive={positive.current}
-        />
+      {good + neutral + bad !== 0 ? (
+        <Statistics good={good} neutral={neutral} bad={bad} />
       ) : (
         <p>No feedback given</p>
       )}
