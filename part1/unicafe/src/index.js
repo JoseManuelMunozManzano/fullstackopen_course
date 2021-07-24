@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
 const Header = () => <h1>give feedback</h1>;
