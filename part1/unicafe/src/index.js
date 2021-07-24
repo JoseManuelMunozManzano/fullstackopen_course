@@ -9,11 +9,26 @@ const Button = ({ text, handleClick }) => {
 
 const StatisticsHeader = () => <h1>statistics</h1>;
 
-const Statistics = ({ text, value, sign = '' }) => (
-  <p>
-    {text} {value} {sign}
-  </p>
-);
+const Statistic = ({ text, value, sign = '' }) => {
+  return (
+    <p>
+      {text} {value} {sign}
+    </p>
+  );
+};
+
+const Statistics = ({ good, neutral, bad, all, average, positive }) => {
+  return (
+    <div>
+      <Statistic text="good" value={good} />
+      <Statistic text="neutral" value={neutral} />
+      <Statistic text="bad" value={bad} />
+      <Statistic text="all" value={all} />
+      <Statistic text="average" value={average} />
+      <Statistic text="positive" value={positive} sign="%" />
+    </div>
+  );
+};
 
 const App = () => {
   const [good, setGood] = useState(0);
@@ -53,14 +68,14 @@ const App = () => {
       <StatisticsHeader />
 
       {all.current ? (
-        <>
-          <Statistics text="good" value={good} />
-          <Statistics text="neutral" value={neutral} />
-          <Statistics text="bad" value={bad} />
-          <Statistics text="all" value={all.current} />
-          <Statistics text="average" value={average.current} />
-          <Statistics text="positive" value={positive.current} sign="%" />
-        </>
+        <Statistics
+          good={good}
+          neutral={neutral}
+          bad={bad}
+          all={all.current}
+          average={average.current}
+          positive={positive.current}
+        />
       ) : (
         <p>No feedback given</p>
       )}
