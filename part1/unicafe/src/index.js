@@ -9,7 +9,7 @@ const Button = ({ text, handleClick }) => {
 
 const StatisticsHeader = () => <h1>statistics</h1>;
 
-const StatisticsText = ({ text, value, sign = '' }) => (
+const Statistics = ({ text, value, sign = '' }) => (
   <p>
     {text} {value} {sign}
   </p>
@@ -52,12 +52,12 @@ const App = () => {
 
       <StatisticsHeader />
 
-      <StatisticsText text="good" value={good} />
-      <StatisticsText text="neutral" value={neutral} />
-      <StatisticsText text="bad" value={bad} />
-      <StatisticsText text="all" value={all.current} />
-      <StatisticsText text="average" value={average.current} />
-      <StatisticsText text="positive" value={positive.current} sign="%" />
+      <Statistics text="good" value={good} />
+      <Statistics text="neutral" value={neutral} />
+      <Statistics text="bad" value={bad} />
+      <Statistics text="all" value={all.current} />
+      <Statistics text="average" value={average.current} />
+      <Statistics text="positive" value={positive.current} sign="%" />
     </div>
   );
 };
