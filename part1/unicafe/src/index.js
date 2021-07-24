@@ -52,12 +52,18 @@ const App = () => {
 
       <StatisticsHeader />
 
-      <Statistics text="good" value={good} />
-      <Statistics text="neutral" value={neutral} />
-      <Statistics text="bad" value={bad} />
-      <Statistics text="all" value={all.current} />
-      <Statistics text="average" value={average.current} />
-      <Statistics text="positive" value={positive.current} sign="%" />
+      {all.current ? (
+        <>
+          <Statistics text="good" value={good} />
+          <Statistics text="neutral" value={neutral} />
+          <Statistics text="bad" value={bad} />
+          <Statistics text="all" value={all.current} />
+          <Statistics text="average" value={average.current} />
+          <Statistics text="positive" value={positive.current} sign="%" />
+        </>
+      ) : (
+        <p>No feedback given</p>
+      )}
     </div>
   );
 };
