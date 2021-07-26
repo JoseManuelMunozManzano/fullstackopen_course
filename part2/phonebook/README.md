@@ -1,1 +1,1 @@
-# Exercises 2.6 - 2.14
+# Exercises 2.6 - 2.11
