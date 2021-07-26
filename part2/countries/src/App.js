@@ -29,6 +29,10 @@ const App = () => {
     setCountry(e.target.value);
   };
 
+  const handleShowCountry = (country) => {
+    setCountry(country.name);
+  };
+
   const handleCountriesToShow = () => {
     if (countriesToShow.length === 0) {
       return;
@@ -57,7 +61,11 @@ const App = () => {
         </>
       );
     } else {
-      return countriesToShow.map((c) => <div key={c.name}>{c.name}</div>);
+      return countriesToShow.map((c) => (
+        <div key={c.name}>
+          {c.name} <button onClick={(e) => handleShowCountry(c)}>show</button>
+        </div>
+      ));
     }
   };
 
