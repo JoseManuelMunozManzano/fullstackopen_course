@@ -31,8 +31,29 @@ const App = () => {
       return;
     }
 
-    if (persons.find((person) => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
+    const personFind = persons.find((person) => person.name === newName);
+    if (personFind) {
+      if (
+        window.confirm(
+          `${newName} is already added to phonebook, replace the old number with a new one?`
+        )
+      ) {
+        const updatePerson = { name: personFind.name, number: newNumber };
+        personService
+          .update(personFind.id, updatePerson)
+          .then((updatedPerson) => {
+            setNewName('');
+            setNewNumber('');
+            setPersons(
+              persons.map((person) =>
+                person.id !== personFind.id ? person : updatedPerson
+              )
+            );
+          });
+        return;
+      }
+      setNewName('');
+      setNewNumber('');
       return;
     }
     const person = { name: newName, number: newNumber };
