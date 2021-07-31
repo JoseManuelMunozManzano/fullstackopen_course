@@ -25,6 +25,9 @@ let persons = [
 ];
 
 const PORT = 3001;
+const MAX_ID = 100_000;
+
+app.use(express.json());
 
 app.get('/info', (req, res) => {
   res.send(
@@ -52,6 +55,23 @@ app.delete('/api/persons/:id', (req, res) => {
   persons = persons.filter((person) => person.id !== id);
 
   res.status(204).end();
+});
+
+app.post('/api/persons', (req, res) => {
+  const body = req.body;
+
+  if (!body.name) {
+    return res.status(400).json({ error: 'name is required' });
+  }
+
+  const person = {
+    ...body,
+    id: Math.floor(Math.random() * MAX_ID) + 1,
+  };
+
+  persons = [...persons, person];
+
+  res.json(persons);
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
