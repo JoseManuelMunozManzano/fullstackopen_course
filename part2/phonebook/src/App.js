@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Filter } from './components/Filter';
+import { Notification } from './components/Notification';
 import { PersonForm } from './components/PersonForm';
 import { Persons } from './components/Persons';
 import personService from './services/persons';
@@ -10,6 +11,7 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [filter, setFilter] = useState('');
+  const [message, setMessage] = useState(null);
 
   const getAll = () => {
     personService
@@ -51,6 +53,14 @@ const App = () => {
         personService
           .update(personFind.id, updatePerson)
           .then((updatedPerson) => {
+            setMessage({
+              msg: `Updated ${updatedPerson.name} number to ${updatePerson.number}`,
+              isError: false,
+            });
+            setTimeout(() => {
+              setMessage(null);
+            }, 5000);
+
             setNewName('');
             setNewNumber('');
             setPersons(
@@ -75,6 +85,14 @@ const App = () => {
     personService
       .create(person)
       .then((returnedPerson) => {
+        setMessage({
+          msg: `Added ${returnedPerson.name}`,
+          isError: false,
+        });
+        setTimeout(() => {
+          setMessage(null);
+        }, 5000);
+
         setNewName('');
         setNewNumber('');
         setPersons([...persons, returnedPerson]);
@@ -127,6 +145,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+
+      <Notification message={message} />
 
       <Filter filter={filter} handleFilter={handleFilter} />
 
