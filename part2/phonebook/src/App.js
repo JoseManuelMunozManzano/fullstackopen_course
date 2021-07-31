@@ -11,10 +11,19 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('');
   const [filter, setFilter] = useState('');
 
+  const getAll = () => {
+    personService
+      .getAll()
+      .then((response) => {
+        setPersons(response);
+      })
+      .catch((err) => {
+        alert(`There was a problem getting the data`);
+      });
+  };
+
   useEffect(() => {
-    personService.getAll().then((response) => {
-      setPersons(response);
-    });
+    getAll();
   }, []);
 
   useEffect(() => {
@@ -49,6 +58,12 @@ const App = () => {
                 person.id !== personFind.id ? person : updatedPerson
               )
             );
+          })
+          .catch((err) => {
+            setNewName('');
+            setNewNumber('');
+            alert(`There was a problem updating ${personFind.name}`);
+            getAll();
           });
         return;
       }
@@ -57,20 +72,36 @@ const App = () => {
       return;
     }
     const person = { name: newName, number: newNumber };
-    personService.create(person).then((returnedPerson) => {
-      setNewName('');
-      setNewNumber('');
-      setPersons([...persons, returnedPerson]);
-    });
+    personService
+      .create(person)
+      .then((returnedPerson) => {
+        setNewName('');
+        setNewNumber('');
+        setPersons([...persons, returnedPerson]);
+      })
+      .catch((err) => {
+        setNewName('');
+        setNewNumber('');
+        alert(`There was a problem creating ${person.name}`);
+        getAll();
+      });
   };
 
   const deletePerson = (person) => {
     const { name, id } = person;
     if (window.confirm(`Delete ${name}?`)) {
-      personService.deleteElement(id).then((response) => {
-        console.log();
-        setPersons(persons.filter((person) => person.id !== id));
-      });
+      personService
+        .deleteElement(id)
+        .then((response) => {
+          console.log();
+          setPersons(persons.filter((person) => person.id !== id));
+        })
+        .catch((err) => {
+          setNewName('');
+          setNewNumber('');
+          alert(`There was a problem deleting ${person.name}`);
+          getAll();
+        });
     }
   };
 
