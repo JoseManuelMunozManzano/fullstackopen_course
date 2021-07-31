@@ -20,7 +20,13 @@ const App = () => {
         setPersons(response);
       })
       .catch((err) => {
-        alert(`There was a problem getting the data`);
+        setMessage({
+          msg: 'There was a problem getting the data',
+          isError: true,
+        });
+        setTimeout(() => {
+          setMessage(null);
+        }, 5000);
       });
   };
 
@@ -34,11 +40,54 @@ const App = () => {
     }
   }, [newName, persons]);
 
+  const updatePerson = (personFind) => {
+    const newData = { name: personFind.name, number: newNumber };
+    personService
+      .update(personFind.id, newData)
+      .then((updatedPerson) => {
+        setMessage({
+          msg: `Updated ${updatedPerson.name} number to ${newData.number}`,
+          isError: false,
+        });
+        setTimeout(() => {
+          setMessage(null);
+        }, 5000);
+
+        setNewName('');
+        setNewNumber('');
+        setPersons(
+          persons.map((person) =>
+            person.id !== personFind.id ? person : updatedPerson
+          )
+        );
+      })
+      .catch((err) => {
+        setNewName('');
+        setNewNumber('');
+
+        setMessage({
+          msg: `There was a problem updating ${personFind.name}`,
+          isError: true,
+        });
+        setTimeout(() => {
+          setMessage(null);
+        }, 5000);
+
+        getAll();
+      });
+  };
+
   const addPerson = (e) => {
     e.preventDefault();
 
     if (newName === '') {
-      alert('name is required');
+      setMessage({
+        msg: 'Name required',
+        isError: true,
+      });
+      setTimeout(() => {
+        setMessage(null);
+      }, 3000);
       return;
     }
 
@@ -49,38 +98,14 @@ const App = () => {
           `${newName} is already added to phonebook, replace the old number with a new one?`
         )
       ) {
-        const updatePerson = { name: personFind.name, number: newNumber };
-        personService
-          .update(personFind.id, updatePerson)
-          .then((updatedPerson) => {
-            setMessage({
-              msg: `Updated ${updatedPerson.name} number to ${updatePerson.number}`,
-              isError: false,
-            });
-            setTimeout(() => {
-              setMessage(null);
-            }, 5000);
-
-            setNewName('');
-            setNewNumber('');
-            setPersons(
-              persons.map((person) =>
-                person.id !== personFind.id ? person : updatedPerson
-              )
-            );
-          })
-          .catch((err) => {
-            setNewName('');
-            setNewNumber('');
-            alert(`There was a problem updating ${personFind.name}`);
-            getAll();
-          });
+        updatePerson(personFind);
         return;
       }
       setNewName('');
       setNewNumber('');
       return;
     }
+
     const person = { name: newName, number: newNumber };
     personService
       .create(person)
@@ -100,7 +125,15 @@ const App = () => {
       .catch((err) => {
         setNewName('');
         setNewNumber('');
-        alert(`There was a problem creating ${person.name}`);
+
+        setMessage({
+          msg: `There was a problem creating ${person.name}`,
+          isError: true,
+        });
+        setTimeout(() => {
+          setMessage(null);
+        }, 5000);
+
         getAll();
       });
   };
@@ -111,13 +144,28 @@ const App = () => {
       personService
         .deleteElement(id)
         .then((response) => {
-          console.log();
+          setMessage({
+            msg: `${person.name} has been deleted`,
+            isError: false,
+          });
+          setTimeout(() => {
+            setMessage(null);
+          }, 5000);
+
           setPersons(persons.filter((person) => person.id !== id));
         })
         .catch((err) => {
           setNewName('');
           setNewNumber('');
-          alert(`There was a problem deleting ${person.name}`);
+
+          setMessage({
+            msg: `There was a problem deleting ${person.name}`,
+            isError: true,
+          });
+          setTimeout(() => {
+            setMessage(null);
+          }, 5000);
+
           getAll();
         });
     }
