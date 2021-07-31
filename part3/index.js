@@ -60,12 +60,26 @@ app.delete('/api/persons/:id', (req, res) => {
 app.post('/api/persons', (req, res) => {
   const body = req.body;
 
-  if (!body.name) {
+  if (!body.name.trim()) {
     return res.status(400).json({ error: 'name is required' });
   }
 
+  if (!body.number.trim()) {
+    return res.status(400).json({ error: 'number is required' });
+  }
+
+  if (
+    persons.find(
+      (person) =>
+        person.name.toUpperCase().trim() === body.name.toUpperCase().trim()
+    )
+  ) {
+    return res.status(404).json({ error: 'name must be unique' });
+  }
+
   const person = {
-    ...body,
+    name: body.name.trim(),
+    number: body.number.trim(),
     id: Math.floor(Math.random() * MAX_ID) + 1,
   };
 
