@@ -1,5 +1,11 @@
 const express = require('express');
+const morgan = require('morgan');
+
 const app = express();
+
+// Consts and variables
+const PORT = 3001;
+const MAX_ID = 1_000_000;
 
 let persons = [
   {
@@ -24,11 +30,14 @@ let persons = [
   },
 ];
 
-const PORT = 3001;
-const MAX_ID = 100_000;
-
+// Middlewares
 app.use(express.json());
 
+app.use(
+  morgan(':method :url :status :res[content-length] - :response-time ms')
+);
+
+// Routes
 app.get('/info', (req, res) => {
   res.send(
     `<p>Phonebook has info for ${persons.length} people</p><p>${new Date()}</p>`
@@ -88,4 +97,5 @@ app.post('/api/persons', (req, res) => {
   res.json(persons);
 });
 
+// Port
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
