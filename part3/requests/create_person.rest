@@ -5,3 +5,23 @@ Content-Type: application/json
   "name": "   Gabriel García Márquez    ",
   "number": "11-654-37465"
 }
+
+###
+
+POST https://sheltered-garden-81718.herokuapp.com/api/persons
+Content-Type: application/json
+
+{
+  "name": "Neil Gaiman",
+  "number": "11-654-37465"
+}
+
+
+###
+POST https://sheltered-garden-81718.herokuapp.com/api/persons
+Content-Type: application/json
+
+{
+  "name": "Joe Haldeman",
+  "number": "10-153-47460"
+}
