@@ -50,6 +50,7 @@ const logger = (tokens, req, res) => {
 };
 
 // Middlewares
+app.use(express.static('build'));
 app.use(express.json());
 app.use(morgan(logger));
 app.use(cors());
