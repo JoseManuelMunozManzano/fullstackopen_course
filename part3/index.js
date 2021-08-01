@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 
 const app = express();
 
@@ -50,8 +51,8 @@ const logger = (tokens, req, res) => {
 
 // Middlewares
 app.use(express.json());
-
 app.use(morgan(logger));
+app.use(cors());
 
 // Routes
 app.get('/info', (req, res) => {
@@ -110,7 +111,7 @@ app.post('/api/persons', (req, res) => {
 
   persons = [...persons, person];
 
-  res.json(persons);
+  res.json(person);
 });
 
 // Port
