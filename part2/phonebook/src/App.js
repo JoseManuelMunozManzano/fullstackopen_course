@@ -133,8 +133,6 @@ const App = () => {
         setTimeout(() => {
           setMessage(null);
         }, 5000);
-
-        getAll();
       });
   };
 
@@ -165,8 +163,6 @@ const App = () => {
           setTimeout(() => {
             setMessage(null);
           }, 5000);
-
-          getAll();
         });
     }
   };
