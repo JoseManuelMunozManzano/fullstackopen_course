@@ -2,8 +2,8 @@ POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-  "name": "   Gabriel García Márquez    ",
-  "number": "11-654-37465"
+  "name": "Joe Haldeman",
+  "number": "10-143-1234"
 }
 
 ###
