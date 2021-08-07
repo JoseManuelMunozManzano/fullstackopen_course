@@ -7,10 +7,12 @@ const Person = require('./models/person');
 const app = express();
 
 // Consts and variables
+// eslint-disable-next-line no-undef
 const PORT = process.env.PORT || 3001;
 
 // Functions
 const logger = (tokens, req, res) => {
+  // eslint-disable-next-line no-unused-vars
   morgan.token('body', function (req, res) {
     return JSON.stringify(req.body);
   });
