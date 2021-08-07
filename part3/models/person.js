@@ -21,10 +21,14 @@ const phonebookSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    minLength: 3,
     unique: true,
     uniqueCaseInsensitive: true,
   },
-  number: String,
+  number: {
+    type: String,
+    minLength: 8,
+  },
 });
 
 phonebookSchema.plugin(uniqueValidator);

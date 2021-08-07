@@ -89,7 +89,7 @@ const App = () => {
       });
       setTimeout(() => {
         setMessage(null);
-      }, 3000);
+      }, 5000);
       return;
     }
 
