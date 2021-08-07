@@ -8,7 +8,7 @@ const app = express();
 
 // Consts and variables
 const PORT = process.env.PORT || 3001;
-const MAX_ID = 1_000_000;
+// const MAX_ID = 1_000_000;
 
 // let persons = [
 //   {
