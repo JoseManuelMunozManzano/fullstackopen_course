@@ -35,7 +35,11 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (persons.find((person) => person.name === newName)) {
+    if (
+      persons.find(
+        (person) => person.name.toUpperCase() === newName.toUpperCase()
+      )
+    ) {
       alert(`${newName} is already added to phonebook`);
     }
   }, [newName, persons]);
@@ -89,7 +93,9 @@ const App = () => {
       return;
     }
 
-    const personFind = persons.find((person) => person.name === newName);
+    const personFind = persons.find(
+      (person) => person.name.toUpperCase() === newName.toUpperCase()
+    );
     if (personFind) {
       if (
         window.confirm(
