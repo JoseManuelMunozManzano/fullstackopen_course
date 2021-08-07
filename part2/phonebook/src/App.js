@@ -19,7 +19,7 @@ const App = () => {
       .then((response) => {
         setPersons(response);
       })
-      .catch((err) => {
+      .catch((error) => {
         setMessage({
           msg: 'There was a problem getting the data',
           isError: true,
@@ -61,19 +61,17 @@ const App = () => {
           )
         );
       })
-      .catch((err) => {
+      .catch((error) => {
         setNewName('');
         setNewNumber('');
 
         setMessage({
-          msg: `There was a problem updating ${personFind.name}`,
+          msg: `There was a problem updating ${personFind.name}: ${error.response.data.error}`,
           isError: true,
         });
         setTimeout(() => {
           setMessage(null);
         }, 5000);
-
-        getAll();
       });
   };
 
@@ -122,12 +120,12 @@ const App = () => {
         setNewNumber('');
         setPersons([...persons, returnedPerson]);
       })
-      .catch((err) => {
+      .catch((error) => {
         setNewName('');
         setNewNumber('');
 
         setMessage({
-          msg: `There was a problem creating ${person.name}`,
+          msg: error.response.data.error,
           isError: true,
         });
         setTimeout(() => {
@@ -152,12 +150,12 @@ const App = () => {
 
           setPersons(persons.filter((person) => person.id !== id));
         })
-        .catch((err) => {
+        .catch((error) => {
           setNewName('');
           setNewNumber('');
 
           setMessage({
-            msg: `There was a problem deleting ${person.name}`,
+            msg: `There was a problem deleting ${person.name}: ${error.response.data.error}`,
             isError: true,
           });
           setTimeout(() => {

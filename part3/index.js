@@ -95,6 +95,27 @@ app.post('/api/persons', (req, res) => {
   });
 });
 
+app.put('/api/persons/:id', (req, res, next) => {
+  const body = req.body;
+
+  if (!body.number.trim()) {
+    return res.status(400).json({ error: 'number is required' });
+  }
+
+  const person = {
+    number: body.number,
+  };
+
+  Person.findByIdAndUpdate(req.params.id, person, { new: true })
+    .then((updatedPerson) => {
+      if (!updatedPerson) {
+        return res.status(400).json({ error: 'Not updated' });
+      }
+      res.json(updatedPerson);
+    })
+    .catch(next);
+});
+
 app.delete('/api/persons/:id', (req, res, next) => {
   const id = req.params.id;
 
