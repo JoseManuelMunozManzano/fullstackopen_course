@@ -17,20 +17,38 @@ const mostBlogs = (blogs) => {
     return {};
   }
 
-  const { author } = _.maxBy(blogs, (blog) => blog.author);
-  const numberBlogs = _.reduce(
-    blogs,
-    (sum, blog) => {
-      return blog.author === author ? sum + 1 : sum;
-    },
-    0
-  );
+  return _.chain(blogs)
+    .groupBy('author')
+    .map((value, key) => ({
+      author: key,
+      blogs: _.reduce(value, (sum, v) => (v.author === key ? sum + 1 : sum), 0),
+    }))
+    .values()
+    .orderBy('blogs', 'desc')
+    .head()
+    .value();
+};
 
-  return { author, blogs: numberBlogs };
+const mostLikes = (blogs) => {
+  if (blogs.length === 0) {
+    return {};
+  }
+
+  return _.chain(blogs)
+    .groupBy('author')
+    .map((value, key) => ({
+      author: key,
+      likes: _.sumBy(value, (v) => v.likes),
+    }))
+    .values()
+    .orderBy('likes', 'desc')
+    .head()
+    .value();
 };
 
 module.exports = {
   dummy,
   totalLikes,
   mostBlogs,
+  mostLikes,
 };
