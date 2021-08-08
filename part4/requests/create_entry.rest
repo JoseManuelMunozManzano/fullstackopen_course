@@ -1,0 +1,53 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Josh W. Comeau's Blog",
+  "author": "Josh W. Comeau",
+  "url": "https://www.joshwcomeau.com/",
+  "likes": "5310"  
+}
+
+###
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Overreacted",
+  "author": "Dan Abramov",
+  "url": "https://overreacted.io/",
+  "likes": "3336"  
+}
+
+###
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Kent C. Dodds' Blog",
+  "author": "Kent C. Dodds",
+  "url": "https://kentcdodds.com/blog/",
+  "likes": "3109"  
+}
+
+###
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Swizec Teller's Blog",
+  "author": "Swizec",
+  "url": "https://swizec.com/blog/",
+  "likes": "2644"  
+}
+
+###
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "2ality",
+  "author": "Axel Rauschmayer",
+  "url": "https://2ality.com/",
+  "likes": "2586"  
+}
