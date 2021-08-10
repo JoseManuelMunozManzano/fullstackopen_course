@@ -67,7 +67,7 @@ const nonExistingId = async () => {
     title: 'willremovethisson',
     author: 'willremovethisson',
     url: 'willremovethisson',
-    likes: 0,
+    likes: 1,
   });
 
   await blog.save();
