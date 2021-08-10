@@ -66,6 +66,15 @@ describe('testing blog api', () => {
     expect(likes).toBe(0);
   });
 
+  test('not title and url then status 400', async () => {
+    const newBlog = {
+      author: 'Josh W. Comeau',
+      likes: 10,
+    };
+
+    await api.post('/api/blogs').send(newBlog).expect(400);
+  });
+
   afterAll(() => {
     mongoose.connection.close();
   });
