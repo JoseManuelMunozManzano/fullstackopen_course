@@ -47,6 +47,25 @@ describe('testing blog api', () => {
     expect(titles).toContain("Josh W. Comeau's Blog");
   });
 
+  test('if not exists likes property, then likes will be 0', async () => {
+    const newBlog = {
+      title: "Josh W. Comeau's Blog",
+      author: 'Josh W. Comeau',
+      url: 'https://www.joshwcomeau.com/',
+    };
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/);
+
+    const blogsAtEnd = await helper.blogsInDb();
+    const { likes } = blogsAtEnd.filter((b) => b.title === newBlog.title)[0];
+
+    expect(likes).toBe(0);
+  });
+
   afterAll(() => {
     mongoose.connection.close();
   });
