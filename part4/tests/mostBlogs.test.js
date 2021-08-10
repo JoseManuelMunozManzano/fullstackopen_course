@@ -1,5 +1,5 @@
 const mostBlogs = require('../utils/list_helper').mostBlogs;
-const blogs = require('./data').blogs;
+const blogs = require('./test_helper').blogs;
 
 describe('most blogs', () => {
   test('obtain author who has the largest amount of blogs and the number of them', () => {

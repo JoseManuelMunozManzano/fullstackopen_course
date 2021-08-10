@@ -1,6 +1,6 @@
 const totalLikes = require('../utils/list_helper').totalLikes;
-const listWithOneBlog = require('./data').listWithOneBlog;
-const blogs = require('./data').blogs;
+const listWithOneBlog = require('./test_helper').listWithOneBlog;
+const blogs = require('./test_helper').blogs;
 
 describe('total likes', () => {
   test('of empty list is zero', () => {
