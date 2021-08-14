@@ -6,7 +6,7 @@ blogsRouter.get('/', async (request, response) => {
   response.json(blogs);
 });
 
-blogsRouter.post('/', (request, response) => {
+blogsRouter.post('/', async (request, response) => {
   const blog = new Blog(request.body);
 
   if (blog.title === undefined && blog.url === undefined) {
@@ -17,9 +17,13 @@ blogsRouter.post('/', (request, response) => {
     blog.likes = 0;
   }
 
-  blog.save().then((result) => {
-    response.status(201).json(result);
-  });
+  const result = await blog.save();
+  response.status(201).json(result);
+});
+
+blogsRouter.delete('/:id', async (request, response) => {
+  await Blog.findByIdAndRemove(request.params.id);
+  response.status(204).end();
 });
 
 module.exports = blogsRouter;
