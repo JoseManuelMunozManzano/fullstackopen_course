@@ -66,7 +66,7 @@ describe('testing blog api', () => {
     expect(likes).toBe(0);
   });
 
-  test('not title and url then status 400', async () => {
+  test('no title and url then status 400', async () => {
     const newBlog = {
       author: 'Josh W. Comeau',
       likes: 10,
