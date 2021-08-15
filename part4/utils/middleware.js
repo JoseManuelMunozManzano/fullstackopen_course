@@ -1,9 +1,22 @@
 const logger = require('./logger');
 
 const errors = {
-  passLength: 'The length of the password must be at least 3 characters',
-  passReq: 'Password required',
-  titUrlReq: 'Title and Url required',
+  passLength: {
+    status: 400,
+    msg: 'The length of the password must be at least 3 characters',
+  },
+  passReq: {
+    status: 400,
+    msg: 'Password required',
+  },
+  titUrlReq: {
+    status: 400,
+    msg: 'Title and Url required',
+  },
+  usOrPassInv: {
+    status: 401,
+    msg: 'Invalid username or password',
+  },
 };
 
 const unknownEndpoint = (req, res) => {
@@ -20,8 +33,9 @@ const errorHandler = (error, req, res, next) => {
       error: error.message,
     });
   } else if (error.name === 'Error') {
-    return res.status(400).json({
-      error: errors[error.message],
+    const { status, msg } = errors[error.message];
+    return res.status(status).json({
+      error: msg,
     });
   }
 
