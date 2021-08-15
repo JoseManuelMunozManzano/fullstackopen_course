@@ -70,6 +70,26 @@ describe('additon of a new blog', () => {
     const titles = blogsAtEnd.map((b) => b.title);
     expect(titles).toContain("Josh W. Comeau's Blog");
   });
+
+  test('error if no token added', async () => {
+    const newBlog = {
+      title: "Josh W. Comeau's Blog",
+      author: 'Josh W. Comeau',
+      url: 'https://www.joshwcomeau.com/',
+      likes: 9,
+    };
+
+    const result = await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(401)
+      .expect('Content-Type', /application\/json/);
+
+    expect(result.body.error).toContain('invalid token');
+
+    const blogsAtEnd = await helper.blogsInDb();
+    expect(blogsAtEnd).toHaveLength(helper.blogs.length);
+  });
 });
 
 describe('existence of blog properties', () => {
