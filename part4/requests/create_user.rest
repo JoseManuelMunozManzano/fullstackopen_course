@@ -16,3 +16,33 @@ Content-Type: application/json
   "name": "Osvaldo Perez",
   "password": "1234"
 }
+
+
+###
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "username": "error",
+  "name": "Password Length Error",
+  "password": "12"
+}
+
+###
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "name": "No username",
+  "password": "12345"
+}
+
+
+###
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "username": "nopass",
+  "name": "No password"
+}
