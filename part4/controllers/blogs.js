@@ -11,7 +11,7 @@ blogsRouter.post('/', async (request, response) => {
   const body = request.body;
 
   if (body.title === undefined && body.url === undefined) {
-    return response.status(400).end();
+    throw new Error('titUrlReq');
   }
 
   if (body.likes === undefined) {

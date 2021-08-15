@@ -90,7 +90,13 @@ describe('existence of blog properties', () => {
       likes: 10,
     };
 
-    await api.post('/api/blogs').send(newBlog).expect(400);
+    const result = await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(400)
+      .expect('Content-Type', /application\/json/);
+
+    expect(result.body.error).toContain('Title and Url required');
   });
 });
 
