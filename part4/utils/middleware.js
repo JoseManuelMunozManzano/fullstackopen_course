@@ -17,6 +17,10 @@ const errors = {
     status: 401,
     msg: 'Invalid username or password',
   },
+  tokenErr: {
+    status: 401,
+    msg: 'Token missing or invalid',
+  },
 };
 
 const unknownEndpoint = (req, res) => {
@@ -32,6 +36,10 @@ const errorHandler = (error, req, res, next) => {
     return res.status(400).json({
       error: error.message,
     });
+  } else if (error.name === 'JsonWebTokenError') {
+    return res.status(401).json({ error: 'invalid token' });
+  } else if (error.name === 'TokenExpiredError') {
+    return res.status(401).json({ error: 'token expired' });
   } else if (error.name === 'Error') {
     const { status, msg } = errors[error.message];
     return res.status(status).json({

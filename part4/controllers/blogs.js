@@ -1,4 +1,6 @@
 const blogsRouter = require('express').Router();
+const jwt = require('jsonwebtoken');
+
 const Blog = require('../models/blog');
 const User = require('../models/user');
 
@@ -7,8 +9,22 @@ blogsRouter.get('/', async (request, response) => {
   response.json(blogs);
 });
 
-blogsRouter.post('/', async (request, response) => {
-  const body = request.body;
+const getTokenFrom = (req) => {
+  const authorization = req.get('authorization');
+
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    return authorization.substring(7);
+  }
+};
+
+blogsRouter.post('/', async (req, res) => {
+  const body = req.body;
+
+  const token = getTokenFrom(req);
+  const decodedToken = jwt.verify(token, process.env.SECRET);
+  if (!token || !decodedToken.id) {
+    throw new Error('tokenErr');
+  }
 
   if (body.title === undefined && body.url === undefined) {
     throw new Error('titUrlReq');
@@ -18,7 +34,7 @@ blogsRouter.post('/', async (request, response) => {
     body.likes = 0;
   }
 
-  const user = await User.findById(body.userId);
+  const user = await User.findById(decodedToken.id);
 
   const blog = new Blog({
     title: body.title,
@@ -33,31 +49,27 @@ blogsRouter.post('/', async (request, response) => {
   user.blogs = user.blogs.concat(savedBlog._id);
   await user.save();
 
-  response.status(201).json(savedBlog);
+  res.status(201).json(savedBlog);
 });
 
-blogsRouter.delete('/:id', async (request, response) => {
-  await Blog.findByIdAndRemove(request.params.id);
-  response.status(204).end();
+blogsRouter.delete('/:id', async (req, res) => {
+  await Blog.findByIdAndRemove(req.params.id);
+  res.status(204).end();
 });
 
-blogsRouter.put('/:id', async (request, response, next) => {
-  const { likes } = request.body;
+blogsRouter.put('/:id', async (req, res, next) => {
+  const { likes } = req.body;
 
   const newLikes = {
     likes,
   };
 
   try {
-    const updatedBlog = await Blog.findByIdAndUpdate(
-      request.params.id,
-      newLikes,
-      {
-        new: true,
-      }
-    );
+    const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, newLikes, {
+      new: true,
+    });
 
-    response.json(updatedBlog);
+    res.json(updatedBlog);
   } catch (error) {
     next(error);
   }
