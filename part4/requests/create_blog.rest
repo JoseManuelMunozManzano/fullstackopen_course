@@ -1,6 +1,6 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFpcmlzIiwiaWQiOiI2MTE4ZDU3NzkxMzgwMjEzNzgyMTJlOTEiLCJpYXQiOjE2MjkwMTc2NDMsImV4cCI6MTYyOTAzNTY0M30.bEpdE6NjYXIWJtquq9zApu9fLesBw7C6OxGk-nVse28
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFpcmlzIiwiaWQiOiI2MTE5MTk5NDBmYzJkNDBkMmVjMWM1ZWEiLCJpYXQiOjE2MjkwMzQ5MTYsImV4cCI6MTYyOTA1MjkxNn0.veWmdXP596H1RTWJoAJC-OoYoe68TqjpOf95iD3f7NE
 
 {
   "title": "Go To Statement Considered Harmful",
@@ -12,7 +12,7 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFpc
 ###
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFpcmlzIiwiaWQiOiI2MTE4ZDU3NzkxMzgwMjEzNzgyMTJlOTEiLCJpYXQiOjE2MjkwMTc0NzgsImV4cCI6MTYyOTAzNTQ3OH0.epVJiW66JL_UQo-fBaYrSyRel7Tme2FJfil3YvlN2u0
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFpcmlzIiwiaWQiOiI2MTE5MTk5NDBmYzJkNDBkMmVjMWM1ZWEiLCJpYXQiOjE2MjkwMzQ5MTYsImV4cCI6MTYyOTA1MjkxNn0.veWmdXP596H1RTWJoAJC-OoYoe68TqjpOf95iD3f7NE
 
 {
   "title": "React patterns",
@@ -24,7 +24,7 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFpc
 ###
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im9wZXJleiIsImlkIjoiNjExOGQ1N2I5MTM4MDIxMzc4MjEyZTk1IiwiaWF0IjoxNjI5MDE3NjkxLCJleHAiOjE2MjkwMzU2OTF9.LyKnEJ7tEbqMHRJgVUFyf44zkO9OqpJeEj0-NqpkDSU
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im9wZXJleiIsImlkIjoiNjExOTE5OTUwZmMyZDQwZDJlYzFjNWVlIiwiaWF0IjoxNjI5MDM0OTQ3LCJleHAiOjE2MjkwNTI5NDd9.CzeF--pTpM0Hza40JxVw4knAU_3WffiIGbF_X0TRF2Y
 
 {
   "title": "Canonical string reduction",
@@ -36,7 +36,7 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im9wZ
 ###
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im9wZXJleiIsImlkIjoiNjExOGQ1N2I5MTM4MDIxMzc4MjEyZTk1IiwiaWF0IjoxNjI5MDE3NjkxLCJleHAiOjE2MjkwMzU2OTF9.LyKnEJ7tEbqMHRJgVUFyf44zkO9OqpJeEj0-NqpkDSU
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im9wZXJleiIsImlkIjoiNjExOTE5OTUwZmMyZDQwZDJlYzFjNWVlIiwiaWF0IjoxNjI5MDM0OTQ3LCJleHAiOjE2MjkwNTI5NDd9.CzeF--pTpM0Hza40JxVw4knAU_3WffiIGbF_X0TRF2Y
 
 {
   "title": "First class tests",
@@ -48,7 +48,7 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im9wZ
 ###
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im9wZXJleiIsImlkIjoiNjExOGQ1N2I5MTM4MDIxMzc4MjEyZTk1IiwiaWF0IjoxNjI5MDE3NjkxLCJleHAiOjE2MjkwMzU2OTF9.LyKnEJ7tEbqMHRJgVUFyf44zkO9OqpJeEj0-NqpkDSU
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im9wZXJleiIsImlkIjoiNjExOTE5OTUwZmMyZDQwZDJlYzFjNWVlIiwiaWF0IjoxNjI5MDM0OTQ3LCJleHAiOjE2MjkwNTI5NDd9.CzeF--pTpM0Hza40JxVw4knAU_3WffiIGbF_X0TRF2Y
 
 {
   "title": "TDD harms architecture",
@@ -60,7 +60,7 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im9wZ
 ###
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im9wZXJleiIsImlkIjoiNjExOGQ1N2I5MTM4MDIxMzc4MjEyZTk1IiwiaWF0IjoxNjI5MDE3NjkxLCJleHAiOjE2MjkwMzU2OTF9.LyKnEJ7tEbqMHRJgVUFyf44zkO9OqpJeEj0-NqpkDSU
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im9wZXJleiIsImlkIjoiNjExOTE5OTUwZmMyZDQwZDJlYzFjNWVlIiwiaWF0IjoxNjI5MDM0OTQ3LCJleHAiOjE2MjkwNTI5NDd9.CzeF--pTpM0Hza40JxVw4knAU_3WffiIGbF_X0TRF2Y
 
 {
   "title": "Type wars",

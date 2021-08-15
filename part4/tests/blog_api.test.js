@@ -37,19 +37,20 @@ describe('when there is initially some blogs saved', () => {
 
 describe('additon of a new blog', () => {
   test('a valid blog can be added', async () => {
-    const user = await api.get('/api/users');
-
     const newBlog = {
       title: "Josh W. Comeau's Blog",
       author: 'Josh W. Comeau',
       url: 'https://www.joshwcomeau.com/',
       likes: 9,
-      userId: user.body[0].id,
     };
+
+    const user = await api.get('/api/users');
+    const token = helper.obtainToken(user.body[0]);
 
     await api
       .post('/api/blogs')
       .send(newBlog)
+      .set('Authorization', 'bearer ' + token)
       .expect(201)
       .expect('Content-Type', /application\/json/);
 
@@ -63,18 +64,19 @@ describe('additon of a new blog', () => {
 
 describe('existence of blog properties', () => {
   test('if not exists likes property, then likes will be 0', async () => {
-    const user = await api.get('/api/users');
-
     const newBlog = {
       title: "Josh W. Comeau's Blog",
       author: 'Josh W. Comeau',
       url: 'https://www.joshwcomeau.com/',
-      userId: user.body[0].id,
     };
+
+    const user = await api.get('/api/users');
+    const token = helper.obtainToken(user.body[0]);
 
     await api
       .post('/api/blogs')
       .send(newBlog)
+      .set('Authorization', 'bearer ' + token)
       .expect(201)
       .expect('Content-Type', /application\/json/);
 
@@ -90,9 +92,13 @@ describe('existence of blog properties', () => {
       likes: 10,
     };
 
+    const user = await api.get('/api/users');
+    const token = helper.obtainToken(user.body[0]);
+
     const result = await api
       .post('/api/blogs')
       .send(newBlog)
+      .set('Authorization', 'bearer ' + token)
       .expect(400)
       .expect('Content-Type', /application\/json/);
 

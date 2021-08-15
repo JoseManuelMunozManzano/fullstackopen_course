@@ -7,16 +7,15 @@ const bcrypt = require('bcrypt');
 
 const User = require('../models/user');
 
+beforeEach(async () => {
+  await User.deleteMany({});
+
+  const passwordHash = await bcrypt.hash('1234', 10);
+  const user = new User({ username: 'root', passwordHash });
+
+  await user.save();
+});
 describe('testing restrictions', () => {
-  beforeEach(async () => {
-    await User.deleteMany({});
-
-    const passwordHash = await bcrypt.hash('1234', 10);
-    const user = new User({ username: 'root', passwordHash });
-
-    await user.save();
-  });
-
   test('fails if the length of the password is less than 3 characters', async () => {
     const newUser = {
       username: 'aperez',
