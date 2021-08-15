@@ -21,6 +21,10 @@ const errors = {
     status: 401,
     msg: 'Token missing or invalid',
   },
+  UserIncorrect: {
+    status: 401,
+    msg: "You can't delete this blog",
+  },
 };
 
 const unknownEndpoint = (req, res) => {

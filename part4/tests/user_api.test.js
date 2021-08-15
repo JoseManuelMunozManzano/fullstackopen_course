@@ -3,18 +3,7 @@ const mongoose = require('mongoose');
 const helper = require('./test_helper');
 const app = require('../app');
 const api = supertest(app);
-const bcrypt = require('bcrypt');
 
-const User = require('../models/user');
-
-beforeEach(async () => {
-  await User.deleteMany({});
-
-  const passwordHash = await bcrypt.hash('1234', 10);
-  const user = new User({ username: 'root', passwordHash });
-
-  await user.save();
-});
 describe('testing restrictions', () => {
   test('fails if the length of the password is less than 3 characters', async () => {
     const newUser = {
@@ -81,13 +70,17 @@ describe('testing restrictions', () => {
   });
 
   test('creation fails with proper statuscode and message if username already taken', async () => {
-    const usersAtStart = await helper.usersInDb();
-
     const newUser = {
-      username: 'root',
-      name: 'root',
-      password: '123456',
+      username: 'aperez',
+      name: 'Alexander Perez',
+      password: '12345',
     };
+
+    await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(200)
+      .expect('Content-Type', /application\/json/);
 
     const result = await api
       .post('/api/users')
@@ -96,9 +89,6 @@ describe('testing restrictions', () => {
       .expect('Content-Type', /application\/json/);
 
     expect(result.body.error).toContain('`username` to be unique');
-
-    const usersAtEnd = await helper.usersInDb();
-    expect(usersAtEnd).toHaveLength(usersAtStart.length);
   });
 });
 

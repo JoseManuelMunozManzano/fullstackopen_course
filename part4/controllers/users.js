@@ -12,13 +12,13 @@ usersRouter.get('/', async (req, res) => {
   res.json(users);
 });
 
-usersRouter.post('/', async (req, res) => {
+usersRouter.post('/', async (req, res, next) => {
   const { username, name, password } = req.body;
 
   if (!password) {
-    throw new Error('passReq');
+    return next(new Error('passReq'));
   } else if (password.length < 3) {
-    throw new Error('passLength');
+    return next(new Error('passLength'));
   }
 
   const saltRounds = 10;

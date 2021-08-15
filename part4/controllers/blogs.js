@@ -3,22 +3,23 @@ const jwt = require('jsonwebtoken');
 
 const Blog = require('../models/blog');
 const User = require('../models/user');
+const { usersInDb } = require('../tests/test_helper');
 
-blogsRouter.get('/', async (request, response) => {
+blogsRouter.get('/', async (request, response, next) => {
   const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 });
   response.json(blogs);
 });
 
-blogsRouter.post('/', async (req, res) => {
+blogsRouter.post('/', async (req, res, next) => {
   const body = req.body;
 
   const decodedToken = jwt.verify(req.token, process.env.SECRET);
   if (!req.token || !decodedToken.id) {
-    throw new Error('tokenErr');
+    return next(new Error('tokenErr'));
   }
 
   if (body.title === undefined && body.url === undefined) {
-    throw new Error('titUrlReq');
+    return next(new Error('titUrlReq'));
   }
 
   if (body.likes === undefined) {
@@ -43,7 +44,24 @@ blogsRouter.post('/', async (req, res) => {
   res.status(201).json(savedBlog);
 });
 
-blogsRouter.delete('/:id', async (req, res) => {
+blogsRouter.delete('/:id', async (req, res, next) => {
+  const blog = await Blog.findById(req.params.id);
+  const decodedToken = jwt.verify(req.token, process.env.SECRET);
+
+  if (!req.token || !decodedToken.id) {
+    return next(new Error('tokenErr'));
+  }
+
+  const user = await User.findById(decodedToken.id);
+  if (blog.user.toString() !== user._id.toString()) {
+    return next(new Error('UserIncorrect'));
+  }
+
+  user.blogs = user.blogs.filter(
+    (b) => b._id.toString() !== req.params.id.toString()
+  );
+  await user.save();
+
   await Blog.findByIdAndRemove(req.params.id);
   res.status(204).end();
 });
@@ -62,7 +80,7 @@ blogsRouter.put('/:id', async (req, res, next) => {
 
     res.json(updatedBlog);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 

@@ -9,16 +9,26 @@ const Blog = require('../models/blog');
 const User = require('../models/user');
 
 beforeEach(async () => {
-  await Blog.deleteMany({});
-
-  const blogObjects = helper.blogs.map((blog) => new Blog(blog));
-  const promiseArray = blogObjects.map((blog) => blog.save());
-  await Promise.all(promiseArray);
-
   await User.deleteMany({});
-  const passwordHash = await bcrypt.hash('sekret', 10);
-  const user = new User({ username: 'testUser', passwordHash });
-  await user.save();
+  const userObjects = helper.users.map((user) => new User(user));
+  const promiseArrayUsers = userObjects.map((user) => user.save());
+
+  await Blog.deleteMany({});
+  const blogObjects = helper.blogs.map((blog) => new Blog(blog));
+  const promiseArrayBlogs = blogObjects.map((blog) => blog.save());
+
+  await Promise.all(promiseArrayUsers, promiseArrayBlogs);
+
+  // await Blog.deleteMany({});
+
+  // const blogObjects = helper.blogs.map((blog) => new Blog(blog));
+  // const promiseArray = blogObjects.map((blog) => blog.save());
+  // await Promise.all(promiseArray);
+
+  // await User.deleteMany({});
+  // const passwordHash = await bcrypt.hash('sekret', 10);
+  // const user = new User({ username: 'testUser', passwordHash });
+  // await user.save();
 });
 
 describe('when there is initially some blogs saved', () => {
@@ -111,7 +121,13 @@ describe('deletion of a blog', () => {
     const blogsAtStart = await helper.blogsInDb();
     const blogToDelete = blogsAtStart[0];
 
-    await api.delete(`/api/blogs/${blogToDelete.id}`).expect(204);
+    const user = await api.get('/api/users');
+    const token = helper.obtainToken(user.body[0]);
+
+    await api
+      .delete(`/api/blogs/${blogToDelete.id}`)
+      .set('Authorization', 'bearer ' + token)
+      .expect(204);
 
     const blogsAtEnd = await helper.blogsInDb();
     expect(blogsAtEnd).toHaveLength(helper.blogs.length - 1);
