@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 const supertest = require('supertest');
 const helper = require('./test_helper');
+const bcrypt = require('bcrypt');
 const app = require('../app');
 const api = supertest(app);
+
 const Blog = require('../models/blog');
+const User = require('../models/user');
 
 beforeEach(async () => {
   await Blog.deleteMany({});
@@ -11,6 +14,11 @@ beforeEach(async () => {
   const blogObjects = helper.blogs.map((blog) => new Blog(blog));
   const promiseArray = blogObjects.map((blog) => blog.save());
   await Promise.all(promiseArray);
+
+  await User.deleteMany({});
+  const passwordHash = await bcrypt.hash('sekret', 10);
+  const user = new User({ username: 'testUser', passwordHash });
+  await user.save();
 });
 
 describe('when there is initially some blogs saved', () => {
@@ -29,11 +37,14 @@ describe('when there is initially some blogs saved', () => {
 
 describe('additon of a new blog', () => {
   test('a valid blog can be added', async () => {
+    const user = await api.get('/api/users');
+
     const newBlog = {
       title: "Josh W. Comeau's Blog",
       author: 'Josh W. Comeau',
       url: 'https://www.joshwcomeau.com/',
       likes: 9,
+      userId: user.body[0].id,
     };
 
     await api
@@ -52,10 +63,13 @@ describe('additon of a new blog', () => {
 
 describe('existence of blog properties', () => {
   test('if not exists likes property, then likes will be 0', async () => {
+    const user = await api.get('/api/users');
+
     const newBlog = {
       title: "Josh W. Comeau's Blog",
       author: 'Josh W. Comeau',
       url: 'https://www.joshwcomeau.com/',
+      userId: user.body[0].id,
     };
 
     await api
