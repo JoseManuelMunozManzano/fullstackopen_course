@@ -13,7 +13,8 @@ const App = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [message, setMessage] = useState(null);
+  const [typeMessage, setTypeMessage] = useState('');
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -42,9 +43,11 @@ const App = () => {
       setUsername('');
       setPassword('');
     } catch (exception) {
-      setErrorMessage('Wrong credentials');
+      setMessage('Wrong credentials');
+      setTypeMessage('error');
       setTimeout(() => {
-        setErrorMessage(null);
+        setMessage(null);
+        setTypeMessage('');
       }, 5000);
     }
   };
@@ -84,7 +87,7 @@ const App = () => {
     </div>
   );
 
-  const addBlog = (e) => {
+  const addBlog = async (e) => {
     e.preventDefault();
 
     const blogObject = {
@@ -93,12 +96,31 @@ const App = () => {
       url,
     };
 
-    blogService.create(blogObject).then((returnedBlog) => {
+    try {
+      const returnedBlog = await blogService.create(blogObject);
       setBlogs([...blogs, returnedBlog]);
       setTitle('');
       setAuthor('');
       setUrl('');
-    });
+
+      setMessage(
+        `a new blog ${returnedBlog.title} by ${returnedBlog.author} added`
+      );
+      setTypeMessage('successful');
+      setTimeout(() => {
+        setMessage(null);
+        setTypeMessage('');
+      }, 5000);
+    } catch (exception) {
+      setMessage(
+        `ERROR adding blog ${blogObject.title} by ${blogObject.author}`
+      );
+      setTypeMessage('error');
+      setTimeout(() => {
+        setMessage(null);
+        setTypeMessage('');
+      }, 5000);
+    }
   };
 
   const newBlogForm = () => (
@@ -154,7 +176,7 @@ const App = () => {
 
   return (
     <div>
-      <Notification message={errorMessage} />
+      <Notification message={message} type={typeMessage} />
       {user === null ? loginForm() : blogForm()}
     </div>
   );
