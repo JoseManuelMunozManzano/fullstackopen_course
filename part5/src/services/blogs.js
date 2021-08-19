@@ -25,4 +25,11 @@ const getAll = () => {
   return request.then((response) => response.data);
 };
 
-export default { getAll, setToken, unsetToken, create };
+const result = {
+  getAll,
+  setToken,
+  unsetToken,
+  create,
+};
+
+export default result;
