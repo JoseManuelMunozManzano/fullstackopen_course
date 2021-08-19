@@ -20,6 +20,11 @@ const create = async (newObject) => {
   return response.data;
 };
 
+const put = async (newObject) => {
+  const response = await axios.put(`${baseUrl}/${newObject.id}`, newObject);
+  return response.data;
+};
+
 const getAll = () => {
   const request = axios.get(baseUrl);
   return request.then((response) => response.data);
@@ -30,6 +35,7 @@ const result = {
   setToken,
   unsetToken,
   create,
+  put,
 };
 
 export default result;

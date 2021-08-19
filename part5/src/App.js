@@ -102,6 +102,25 @@ const App = () => {
     }
   };
 
+  const addLike = async (blogObject) => {
+    try {
+      await blogService.put(blogObject);
+
+      setBlogs(
+        blogs.map((blog) => (blog.id === blogObject.id ? blogObject : blog))
+      );
+    } catch (exception) {
+      setMessage(
+        `ERROR adding like to the blog ${blogObject.title} by ${blogObject.author}`
+      );
+      setTypeMessage('error');
+      setTimeout(() => {
+        setMessage(null);
+        setTypeMessage('');
+      }, 5000);
+    }
+  };
+
   const blogForm = () => (
     <div>
       <h2>blogs</h2>
@@ -114,7 +133,7 @@ const App = () => {
       </Togglable>
 
       {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} addLike={addLike} />
       ))}
     </div>
   );
