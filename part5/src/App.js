@@ -6,6 +6,7 @@ import loginService from './services/login';
 import { Notification } from './components/Notification';
 import { Togglable } from './components/Togglable';
 import { BlogForm } from './components/BlogForm';
+import { LoginForm } from './components/LoginForm';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -60,32 +61,19 @@ const App = () => {
     setUser(null);
   };
 
-  const loginForm = () => (
-    <div>
-      <h2>Log in to application</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          username
-          <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
-          password
-          <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
-    </div>
-  );
+  const loginForm = () => {
+    return (
+      <Togglable buttonLabel="log in">
+        <LoginForm
+          username={username}
+          password={password}
+          handleUsernameChange={({ target }) => setUsername(target.value)}
+          handlePasswordChange={({ target }) => setPassword(target.value)}
+          handleSubmit={handleLogin}
+        />
+      </Togglable>
+    );
+  };
 
   const addBlog = async (blogObject) => {
     blogFormRef.current.toggleVisibility();
