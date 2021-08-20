@@ -162,16 +162,12 @@ describe('updating blog', () => {
     const blogsAtStart = await helper.blogsInDb();
     const blogToUpdate = blogsAtStart[0];
 
-    const newLikes = {
-      likes: blogToUpdate.likes + 50,
-    };
-
     const updatedBlog = await api
       .put(`/api/blogs/${blogToUpdate.id}`)
-      .send(newLikes)
+      .send(blogToUpdate)
       .expect(200);
 
-    expect(updatedBlog.body.likes).toBe(newLikes.likes);
+    expect(updatedBlog.body.likes).toBe(blogToUpdate.likes + 1);
   });
 });
 
