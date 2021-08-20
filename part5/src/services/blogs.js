@@ -29,6 +29,15 @@ const put = async (newObject) => {
   return response.data;
 };
 
+const remove = async (id) => {
+  const config = {
+    headers: { Authorization: token },
+  };
+
+  await axios.delete(`${baseUrl}/${id}`, config);
+  return;
+};
+
 const getAll = () => {
   const request = axios.get(baseUrl);
   return request.then((response) => response.data);
@@ -40,6 +49,7 @@ const result = {
   unsetToken,
   create,
   put,
+  remove,
 };
 
 export default result;

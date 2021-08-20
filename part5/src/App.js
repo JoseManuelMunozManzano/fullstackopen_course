@@ -79,7 +79,24 @@ const App = () => {
     blogFormRef.current.toggleVisibility();
 
     try {
-      const returnedBlog = await blogService.create(blogObject);
+      const {
+        id,
+        title,
+        author,
+        url,
+        likes,
+        user: userId,
+      } = await blogService.create(blogObject);
+
+      const returnedBlog = {
+        id,
+        title,
+        author,
+        url,
+        likes,
+        user: { id: userId, username: user.username, name: user.name },
+      };
+
       setBlogs([...blogs, returnedBlog]);
 
       setMessage(
@@ -121,6 +138,36 @@ const App = () => {
     }
   };
 
+  const removeBlog = async (blogObject) => {
+    if (
+      window.confirm(`Remove blog ${blogObject.title} by ${blogObject.author}`)
+    ) {
+      try {
+        await blogService.remove(blogObject.id);
+
+        setBlogs(blogs.filter((blog) => blog.id !== blogObject.id));
+
+        setMessage(
+          `The blog ${blogObject.title} by ${blogObject.author} was removed.`
+        );
+        setTypeMessage('successful');
+        setTimeout(() => {
+          setMessage(null);
+          setTypeMessage('');
+        }, 5000);
+      } catch (exception) {
+        setMessage(
+          `ERROR removing blog ${blogObject.title} by ${blogObject.author}`
+        );
+        setTypeMessage('error');
+        setTimeout(() => {
+          setMessage(null);
+          setTypeMessage('');
+        }, 5000);
+      }
+    }
+  };
+
   const blogForm = () => (
     <div>
       <h2>blogs</h2>
@@ -135,7 +182,13 @@ const App = () => {
       {blogs
         .sort((a, b) => b.likes - a.likes)
         .map((blog) => (
-          <Blog key={blog.id} blog={blog} addLike={addLike} />
+          <Blog
+            key={blog.id}
+            blog={blog}
+            addLike={addLike}
+            removeBlog={removeBlog}
+            userLogin={user}
+          />
         ))}
     </div>
   );

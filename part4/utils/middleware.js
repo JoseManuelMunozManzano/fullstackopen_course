@@ -73,6 +73,7 @@ const tokenExtractor = (req, res, next) => {
 
 const userExtractor = async (req, res, next) => {
   const decodedToken = jwt.verify(req.token, process.env.SECRET);
+
   if (!req.token || !decodedToken.id) {
     return next(new Error('tokenErr'));
   }

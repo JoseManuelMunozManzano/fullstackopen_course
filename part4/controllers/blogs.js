@@ -39,6 +39,7 @@ blogsRouter.post('/', middleware.userExtractor, async (req, res, next) => {
 
 blogsRouter.delete('/:id', middleware.userExtractor, async (req, res, next) => {
   const blog = await Blog.findById(req.params.id);
+
   const user = req.user;
   if (blog.user.toString() !== user._id.toString()) {
     return next(new Error('UserIncorrect'));
