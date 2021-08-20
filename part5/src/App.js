@@ -104,10 +104,10 @@ const App = () => {
 
   const addLike = async (blogObject) => {
     try {
-      await blogService.put(blogObject);
+      const blogUpdated = await blogService.put(blogObject);
 
       setBlogs(
-        blogs.map((blog) => (blog.id === blogObject.id ? blogObject : blog))
+        blogs.map((blog) => (blog.id === blogUpdated.id ? blogUpdated : blog))
       );
     } catch (exception) {
       setMessage(

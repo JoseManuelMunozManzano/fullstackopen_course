@@ -17,8 +17,8 @@ export const Blog = ({ blog, addLike }) => {
 
   const handleLike = () => {
     addLike({
-      user: blog.user,
-      likes: blog.likes + 1,
+      user: blog.user.id,
+      likes: blog.likes,
       author: blog.author,
       title: blog.title,
       url: blog.url,

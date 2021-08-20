@@ -54,16 +54,14 @@ blogsRouter.delete('/:id', middleware.userExtractor, async (req, res, next) => {
 });
 
 blogsRouter.put('/:id', async (req, res, next) => {
-  const { likes } = req.body;
+  const blog = req.body;
 
-  const newLikes = {
-    likes,
-  };
+  blog.likes += 1;
 
   try {
-    const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, newLikes, {
+    const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, blog, {
       new: true,
-    });
+    }).populate('user', { username: 1, name: 1 });
 
     res.json(updatedBlog);
   } catch (error) {
