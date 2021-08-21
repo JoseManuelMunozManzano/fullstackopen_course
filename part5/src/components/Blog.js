@@ -32,11 +32,11 @@ export const Blog = ({ blog, addLike, removeBlog, userLogin }) => {
 
   return (
     <div style={blogStyle}>
-      <div className="blog-title">
+      <div className="blog-title-jest">
         {blog.title} {blog.author}{' '}
         <button onClick={handleDetails}>{showDetails ? 'hide' : 'view'}</button>
         {showDetails && (
-          <div>
+          <div className="blog-details-jest">
             <div>{blog.url}</div>
             <div>
               likes {blog.likes} <button onClick={handleLike}>like</button>
