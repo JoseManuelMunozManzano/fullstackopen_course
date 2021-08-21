@@ -39,7 +39,10 @@ export const Blog = ({ blog, addLike, removeBlog, userLogin }) => {
           <div className="blog-details-jest">
             <div>{blog.url}</div>
             <div>
-              likes {blog.likes} <button onClick={handleLike}>like</button>
+              likes {blog.likes}{' '}
+              <button className="button-likes-jest" onClick={handleLike}>
+                like
+              </button>
             </div>
             <div>{blog.user.name}</div>
 
