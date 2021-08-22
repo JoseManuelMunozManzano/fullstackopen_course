@@ -89,6 +89,37 @@ describe('Blog app', function () {
 
           cy.contains('likes 1');
         });
+
+        it('the user who created the blog can delete it', function () {
+          cy.contains('First class tests')
+            .parent()
+            .find('button')
+            .as('viewButton');
+          cy.get('@viewButton').click();
+
+          cy.get('#remove-button').click();
+          cy.contains(
+            'The blog First class tests by Robert C. Martin was removed'
+          );
+        });
+
+        it('other users can not delete the blog', function () {
+          const userTwo = {
+            name: 'Adriana Perez',
+            username: 'aperez',
+            password: '123456',
+          };
+          cy.request('POST', 'http://localhost:3003/api/users', userTwo);
+          cy.login({ username: 'aperez', password: '123456' });
+
+          cy.contains('First class tests')
+            .parent()
+            .find('button')
+            .as('viewButton');
+          cy.get('@viewButton').click();
+
+          cy.get('#remove-button').should('not.exist');
+        });
       });
     });
   });
