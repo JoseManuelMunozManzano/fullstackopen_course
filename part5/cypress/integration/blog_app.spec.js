@@ -56,6 +56,40 @@ describe('Blog app', function () {
           'a new blog Canonical string reduction by Edsger W. Dijkstra added'
         );
       });
+
+      describe('and several blogs exists', function () {
+        beforeEach(function () {
+          cy.createBlog({
+            title: 'React patterns',
+            author: 'Michael Chan',
+            url: 'https://reactpatterns.com/',
+          });
+
+          cy.createBlog({
+            title: 'Canonical string reduction',
+            author: 'Edsger W. Dijkstra',
+            url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
+          });
+
+          cy.createBlog({
+            title: 'First class tests',
+            author: 'Robert C. Martin',
+            url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.html',
+          });
+        });
+
+        it('User can like a blog', function () {
+          cy.contains('First class tests')
+            .parent()
+            .find('button')
+            .as('viewButton');
+          cy.get('@viewButton').click();
+
+          cy.get('.button-likes-jest').click();
+
+          cy.contains('likes 1');
+        });
+      });
     });
   });
 });
