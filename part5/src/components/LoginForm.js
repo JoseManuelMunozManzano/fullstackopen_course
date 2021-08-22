@@ -16,6 +16,7 @@ export const LoginForm = ({
         <div>
           username
           <input
+            id="username"
             type="text"
             value={username}
             name="username"
@@ -25,13 +26,16 @@ export const LoginForm = ({
         <div>
           password
           <input
+            id="password"
             type="password"
             value={password}
-            name="Password"
+            name="password"
             onChange={handlePasswordChange}
           />
         </div>
-        <button type="submit">login</button>
+        <button id="login-button" type="submit">
+          login
+        </button>
       </form>
     </div>
   );
