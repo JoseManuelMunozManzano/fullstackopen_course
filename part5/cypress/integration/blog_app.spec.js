@@ -120,6 +120,51 @@ describe('Blog app', function () {
 
           cy.get('#remove-button').should('not.exist');
         });
+
+        it('ordered according to likes', function () {
+          cy.contains('First class tests')
+            .parent()
+            .find('button')
+            .click()
+            .get('.button-likes-jest')
+            .click()
+            .wait(500)
+            .get('.button-likes-jest')
+            .click()
+            .wait(500)
+            .get('.button-likes-jest')
+            .click()
+            .wait(500);
+
+          cy.contains('React patterns')
+            .parent()
+            .find('button')
+            .click()
+            .get('.button-likes-jest')
+            .last()
+            .click()
+            .wait(500);
+
+          cy.contains('Canonical string reduction')
+            .parent()
+            .find('button')
+            .click();
+
+          cy.get('.blog')
+            .first()
+            .should('contain', 'First class tests')
+            .should('contain', 'likes 3');
+
+          cy.get('.blog')
+            .eq(1)
+            .should('contain', 'React patterns')
+            .should('contain', 'likes 1');
+
+          cy.get('.blog')
+            .last()
+            .should('contain', 'Canonical string reduction')
+            .should('contain', 'likes 0');
+        });
       });
     });
   });

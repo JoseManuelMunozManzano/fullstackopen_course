@@ -31,14 +31,14 @@ export const Blog = ({ blog, addLike, removeBlog, userLogin }) => {
   };
 
   return (
-    <div style={blogStyle}>
+    <div className="blog" style={blogStyle}>
       <div className="blog-title-jest">
         {blog.title} {blog.author}{' '}
         <button onClick={handleDetails}>{showDetails ? 'hide' : 'view'}</button>
         {showDetails && (
           <div className="blog-details-jest">
             <div>{blog.url}</div>
-            <div>
+            <div className="likes">
               likes {blog.likes}{' '}
               <button className="button-likes-jest" onClick={handleLike}>
                 like
