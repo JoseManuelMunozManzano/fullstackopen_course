@@ -36,5 +36,26 @@ describe('Blog app', function () {
         .should('contain', 'Wrong credentials')
         .and('have.css', 'color', 'rgb(255, 0, 0)');
     });
+
+    describe('When logged in', function () {
+      beforeEach(function () {
+        cy.login({ username: 'jmunoz', password: '123456' });
+      });
+
+      it('A blog can be created', function () {
+        cy.contains('create new blog').click();
+        cy.get('#title').type('Canonical string reduction');
+        cy.get('#author').type('Edsger W. Dijkstra');
+        cy.get('#url').type(
+          'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html'
+        );
+
+        cy.get('#create-button').click();
+
+        cy.contains(
+          'a new blog Canonical string reduction by Edsger W. Dijkstra added'
+        );
+      });
+    });
   });
 });
