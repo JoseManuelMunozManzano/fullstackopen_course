@@ -1,13 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetMessage } from '../reducers/notificationReducer';
+import { resetNotification } from '../reducers/notificationReducer';
 
 const Notification = () => {
   const notification = useSelector((state) => state.notification);
   const dispatch = useDispatch();
 
   setTimeout(() => {
-    dispatch(resetMessage());
+    dispatch(resetNotification());
   }, 5000);
 
   const style = {

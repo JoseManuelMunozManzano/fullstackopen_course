@@ -3,9 +3,9 @@ const notificationReducer = (state = '', action) => {
 
   switch (action.type) {
     case 'CREATE':
-      return action.payload.message;
+      return action.payload.notification;
     case 'VOTE':
-      return action.payload.message;
+      return action.payload.notification;
     case 'RESET':
       return '';
     default:
@@ -13,29 +13,29 @@ const notificationReducer = (state = '', action) => {
   }
 };
 
-export const createMessage = (message) => {
+export const createNotification = (notification) => {
   return {
     type: 'CREATE',
     payload: {
-      message: `you create '${message}'`,
+      notification: `you create '${notification}'`,
     },
   };
 };
 
-export const voteMessage = (message) => {
+export const voteNotification = (notification) => {
   return {
     type: 'VOTE',
     payload: {
-      message: `you voted '${message}'`,
+      notification: `you voted '${notification}'`,
     },
   };
 };
 
-export const resetMessage = () => {
+export const resetNotification = () => {
   return {
     type: 'RESET',
     payload: {
-      message: '',
+      notification: '',
     },
   };
 };
