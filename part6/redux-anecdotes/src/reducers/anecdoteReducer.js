@@ -42,12 +42,16 @@ export const addVote = (id) => {
   };
 };
 
-export const newAnecdote = (data) => {
-  return {
-    type: 'NEW_ANECDOTE',
-    payload: {
-      data,
-    },
+export const newAnecdote = (content) => {
+  return async (dispatch) => {
+    const newAnec = await anecdoteService.createNew(content);
+
+    dispatch({
+      type: 'NEW_ANECDOTE',
+      payload: {
+        data: newAnec,
+      },
+    });
   };
 };
 
