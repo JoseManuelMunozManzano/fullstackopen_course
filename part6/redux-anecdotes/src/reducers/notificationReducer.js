@@ -1,10 +1,6 @@
 const notificationReducer = (state = '', action) => {
-  console.log(state);
-
   switch (action.type) {
-    case 'CREATE':
-      return action.payload.notification;
-    case 'VOTE':
+    case 'SET':
       return action.payload.notification;
     case 'RESET':
       return '';
@@ -13,21 +9,18 @@ const notificationReducer = (state = '', action) => {
   }
 };
 
-export const createNotification = (notification) => {
-  return {
-    type: 'CREATE',
-    payload: {
-      notification: `you create '${notification}'`,
-    },
-  };
-};
+export const setNotification = (notification, time) => {
+  return async (dispatch) => {
+    dispatch({
+      type: 'SET',
+      payload: {
+        notification: notification,
+      },
+    });
 
-export const voteNotification = (notification) => {
-  return {
-    type: 'VOTE',
-    payload: {
-      notification: `you voted '${notification}'`,
-    },
+    setTimeout(() => {
+      dispatch(resetNotification());
+    }, time);
   };
 };
 
