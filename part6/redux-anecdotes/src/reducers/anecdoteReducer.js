@@ -33,8 +33,8 @@ const anecdoteReducer = (state = [], action) => {
     case 'INIT_ANECDOTES':
       return action.payload.data;
     case 'NEW_ANECDOTE':
-      const newAnecdote = asObject(action.payload.content);
-      return [...state, newAnecdote];
+      // const newAnecdote = asObject(action.payload.content);
+      return [...state, action.payload.data];
     default:
       return state;
   }
@@ -58,11 +58,11 @@ export const addVote = (id) => {
   };
 };
 
-export const newAnecdote = (content) => {
+export const newAnecdote = (data) => {
   return {
     type: 'NEW_ANECDOTE',
     payload: {
-      content,
+      data,
     },
   };
 };
